@@ -2,6 +2,7 @@ package com.grechi.tdddemo.service;
 
 import com.grechi.tdddemo.dto.SaleRequestDTO;
 import com.grechi.tdddemo.dto.SaleResponseDTO;
+import com.grechi.tdddemo.fixture.SaleFixture;
 import com.grechi.tdddemo.models.Sale;
 import com.grechi.tdddemo.models.SaleNote;
 import com.grechi.tdddemo.repository.SaleRepository;
@@ -36,20 +37,12 @@ class SaleServiceTest {
         when(saleNoteService.createSaleNote(anyLong())).thenReturn(mockSaleNote);
 
         // When
-        SaleRequestDTO dto = getSaleRequestDTO();
+        SaleRequestDTO dto = SaleFixture.getSaleRequestDTO();
         SaleResponseDTO response = saleService.createSale(dto);
 
         // Then
         assertNotNull(response);
     }
 
-    private static SaleRequestDTO getSaleRequestDTO() {
-        return SaleRequestDTO.builder()
-                .customerId(1L)
-                .grossValue(BigDecimal.valueOf(200))
-                .netValue(BigDecimal.valueOf(180))
-                .discountValue(BigDecimal.valueOf(20))
-                .desiredSaleNoteNumber(1L)
-                .build();
-    }
+
 }
