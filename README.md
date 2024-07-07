@@ -8,6 +8,7 @@
 ## Implementação #1
 
 - A nota de venda tem numeração sequencial (1, 2, 3, ... , n)
+- A primeira nota deve ter numeração igual a 1.
 - O número da nota de venda precisa estar no conteúdo do arquivo .PDF gerado, portanto, precisa ser definido antes da geração da nota de venda
 
 ## Implementação #2
