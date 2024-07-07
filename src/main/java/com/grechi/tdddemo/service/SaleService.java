@@ -40,7 +40,7 @@ public class SaleService {
                 .build();
         Sale savedSale = saleRepository.save(sale);
 
-        SaleNote saleNote = saleNoteService.createSaleNote(savedSale.getId());
+        SaleNote saleNote = saleNoteService.createSaleNote(savedSale.getId(), dto.getDesiredSaleNoteNumber());
 
         return new SaleResponseDTO(savedSale, saleNote);
     }

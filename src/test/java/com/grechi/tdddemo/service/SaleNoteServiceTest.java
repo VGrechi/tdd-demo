@@ -1,5 +1,6 @@
 package com.grechi.tdddemo.service;
 
+import com.grechi.tdddemo.exception.InvalidNumberException;
 import com.grechi.tdddemo.models.SaleNote;
 import com.grechi.tdddemo.repository.SaleNoteRepository;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -31,7 +31,7 @@ class SaleNoteServiceTest {
         when(saleNoteRepository.getLastSaleNote()).thenReturn(Optional.of(mockSaleNote));
 
         // When
-        SaleNote response = saleNoteService.createSaleNote(1L);
+        SaleNote response = saleNoteService.createSaleNote(1L, null);
 
         // Then
         assertNotNull(response);
@@ -45,11 +45,36 @@ class SaleNoteServiceTest {
         when(saleNoteRepository.getLastSaleNote()).thenReturn(Optional.empty());
 
         // When
-        SaleNote response = saleNoteService.createSaleNote(1L);
+        SaleNote response = saleNoteService.createSaleNote(1L, null);
 
         // Then
         assertNotNull(response);
         assertEquals(1L, response.getNumber());
+    }
+
+    @Test
+    void shouldCreateSaleNoteWithDesiredNumber() {
+        // Given
+        when(fileService.generatePDF(any())).thenReturn(new byte[0]);
+        when(saleNoteRepository.getLastSaleNote()).thenReturn(Optional.empty());
+
+        // When
+        SaleNote response = saleNoteService.createSaleNote(1L, 8L);
+
+        // Then
+        assertNotNull(response);
+        assertEquals(8L, response.getNumber());
+    }
+
+    @Test
+    void shouldNotCreateSaleNoteWithDesiredNumberAlreadyUsed() {
+        // Given
+        SaleNote mockSaleNote = getSaleNote();
+        when(saleNoteRepository.getLastSaleNote()).thenReturn(Optional.of(mockSaleNote));
+
+        // When
+        // Then
+        assertThrows(InvalidNumberException.class, () -> saleNoteService.createSaleNote(1L, 1L));
     }
 
     private SaleNote getSaleNote() {

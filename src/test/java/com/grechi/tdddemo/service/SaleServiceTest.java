@@ -12,8 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -34,7 +32,7 @@ class SaleServiceTest {
         when(saleRepository.save(any())).thenReturn(mockSale);
 
         SaleNote mockSaleNote = SaleNote.builder().build();
-        when(saleNoteService.createSaleNote(anyLong())).thenReturn(mockSaleNote);
+        when(saleNoteService.createSaleNote(anyLong(), anyLong())).thenReturn(mockSaleNote);
 
         // When
         SaleRequestDTO dto = SaleFixture.getSaleRequestDTO();
