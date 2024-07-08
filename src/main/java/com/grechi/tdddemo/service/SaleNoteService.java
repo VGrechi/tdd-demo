@@ -29,6 +29,7 @@ public class SaleNoteService {
                 .saleId(saleId)
                 .build();
 
+
         Long nextNumber = getNextNumber(desiredNumber);
         saleNote.setNumber(nextNumber);
 
@@ -41,6 +42,7 @@ public class SaleNoteService {
         return saleNote;
     }
 
+
     private Long getNextNumber(Long desiredNumber) {
         long nextNumber = 1L;
         Optional<SaleNote> opLastSaleNote = saleNoteRepository.getLastSaleNote();
@@ -48,6 +50,7 @@ public class SaleNoteService {
         if(opLastSaleNote.isPresent()){
             nextNumber = opLastSaleNote.get().getNumber() + 1L;
         }
+
 
         if(Objects.nonNull(desiredNumber)){
             if(desiredNumber < nextNumber){

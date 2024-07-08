@@ -52,6 +52,7 @@ class SaleNoteServiceTest {
         assertEquals(1L, response.getNumber());
     }
 
+
     @Test
     void shouldCreateSaleNoteWithDesiredNumber() {
         // Given
